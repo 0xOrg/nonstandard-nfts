@@ -4,6 +4,29 @@ repository: https://github.com/amxx/subgraphs
 schema:
   file: ./schema.graphql
 dataSources:
+  # Axies
+  - kind: ethereum/contract
+    name: Axies
+    network: mainnet
+    source:
+      address: "0xF5b0A3eFB8e8E4c201e2A935F110eAaF3FFEcb8d"
+      startBlock: 5251724
+      abi: Axies
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Token
+      abis:
+        - name: Axies
+          file: ./abis/Axies.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/axies/index.ts
   # CryptoKitties
   - kind: ethereum/contract
     name: CryptoKitties
